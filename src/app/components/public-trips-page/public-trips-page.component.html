@@ -1,0 +1,49 @@
+<div class="container py-4 py-lg-5">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+    <div>
+      <p class="text-body-secondary text-uppercase small mb-2">Лента</p>
+      <h1 class="h3 mb-0">Путешествия других пользователей</h1>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    @for (trip of publicTrips$ | async; track trip.id) {
+      <div class="col-12 col-lg-6">
+        <article class="card h-100 border-0 shadow-sm">
+          <img
+            [src]="trip.imageUrl"
+            [alt]="trip.destination"
+            width="200"
+            height="200"
+            class="rounded object-fit-cover ms-4 mt-4"
+          />
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+              <div>
+                <h2 class="h4 mb-1">{{ trip.destination }}</h2>
+                <p class="text-body-secondary mb-0">{{ trip.user.fullName }} · {{ trip.user.city }}</p>
+              </div>
+              <span class="badge text-bg-light">{{ trip.travelDate | date: 'dd.MM.yyyy' }}</span>
+            </div>
+
+            <p class="mb-3">{{ trip.description }}</p>
+
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="badge text-bg-secondary">Стоимость: {{ trip.cost | number: '1.0-0' }} ₽</span>
+              <span class="badge text-bg-light">Передвижение: {{ trip.ratings.comfort }}/5</span>
+              <span class="badge text-bg-light">Безопасность: {{ trip.ratings.safety }}/5</span>
+              <span class="badge text-bg-light">Населенность: {{ trip.ratings.population }}/5</span>
+              <span class="badge text-bg-light">Растительность: {{ trip.ratings.greenery }}/5</span>
+            </div>
+
+            <p class="small text-body-secondary mb-0">{{ trip.user.about }}</p>
+          </div>
+        </article>
+      </div>
+    } @empty {
+      <div class="col-12">
+        <div class="alert alert-secondary mb-0">Пока нет публичных записей.</div>
+      </div>
+    }
+  </div>
+</div>

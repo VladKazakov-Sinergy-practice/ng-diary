@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Иван Иванов",
+      "city": "Москва",
+      "about": "Описание 1"
+    },
+    {
+      "id": 2,
+      "fullName": "Анна Белова",
+      "city": "Казань",
+      "about": "Описание 2"
+    },
+    {
+      "id": 3,
+      "fullName": "Максим Орлов",
+      "city": "Екатеринбург",
+      "about": "Описание 3"
+    }
+  ],
+  "trips": [
+    {
+      "id": 2,
+      "userId": 2,
+      "destination": "Зеленоградск",
+      "travelDate": "2026-04-18",
+      "description": "Описание о Зеленоградске",
+      "cost": 42000,
+      "imageUrl": "/zelenogradsk.webp",
+      "ratings": {
+        "comfort": 5,
+        "safety": 5,
+        "population": 3,
+        "greenery": 4
+      }
+    },
+    {
+      "id": 3,
+      "userId": 3,
+      "destination": "Плёс",
+      "travelDate": "2026-03-06",
+      "description": "Описание о Плёс",
+      "cost": 28000,
+      "imageUrl": "/ples.jpeg",
+      "ratings": {
+        "comfort": 4,
+        "safety": 5,
+        "population": 2,
+        "greenery": 5
+      }
+    }
+  ]
+}

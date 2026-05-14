@@ -1,0 +1,126 @@
+<div class="container py-4 py-lg-5">
+  <div class="row g-4 align-items-start">
+    <div class="col-12 col-lg-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <p class="text-body-secondary text-uppercase small mb-2">Пользователь системы</p>
+          @if (currentUser$ | async; as user) {
+            <h1 class="h3 mb-1">{{ user.fullName }}</h1>
+            <p class="text-body-secondary mb-3">{{ user.city }}</p>
+            <p class="mb-0">{{ user.about }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-body p-4">
+          <p class="text-body-secondary text-uppercase small mb-2">Подсказка</p>
+          <p class="mb-0">
+            Заполните одну личную запись о поездке. Фото можно загрузить прямо с компьютера, оно сохранится в моковый API как строка.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-8">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4 p-lg-5">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+            <div>
+              <p class="text-body-secondary text-uppercase small mb-2">Моя запись</p>
+              <h2 class="h3 mb-0">Дневник путешествия</h2>
+            </div>
+            @if (saveState() === 'success') {
+              <span class="badge text-bg-success">Сохранено</span>
+            }
+          </div>
+
+          <form [formGroup]="travelForm" (ngSubmit)="submit()" class="row g-3">
+            <div class="col-12 col-md-7">
+              <label class="form-label" for="destination">Место поездки</label>
+              <input id="destination" class="form-control" formControlName="destination" placeholder="Место поездки" />
+            </div>
+
+            <div class="col-12 col-md-5">
+              <label class="form-label" for="travelDate">Дата поездки</label>
+              <input id="travelDate" type="date" class="form-control" formControlName="travelDate" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label" for="description">Описание путешествия</label>
+              <textarea
+                id="description"
+                class="form-control"
+                rows="5"
+                formControlName="description"
+                placeholder="Описание путешествия"
+              ></textarea>
+              @if (travelForm.controls.description.touched && travelForm.controls.description.invalid) {
+                <div class="form-text text-danger">Нужно хотя бы 20 символов.</div>
+              }
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="cost">Стоимость путешествия</label>
+              <div class="input-group">
+                <input id="cost" type="number" min="0" class="form-control" formControlName="cost" />
+                <span class="input-group-text">₽</span>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="image">Фото места</label>
+              <input id="image" type="file" accept="image/*" class="form-control" (change)="onFileSelected($event)" />
+            </div>
+
+            <div class="col-12">
+              @if (imagePreview()) {
+                <img [src]="imagePreview()" alt="Загруженное место" class="img-fluid rounded border" />
+              } @else {
+                <div class="border rounded p-4 text-body-secondary">Фотография</div>
+              }
+            </div>
+
+            <div class="col-12">
+              <h3 class="h5 mb-3">Оценки поездки</h3>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="comfort">Удобство передвижения</label>
+              <input id="comfort" type="range" min="1" max="5" class="form-range" formControlName="comfort" />
+              <div class="small text-body-secondary">Оценка: {{ travelForm.controls.comfort.value }}/5</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="safety">Безопасность</label>
+              <input id="safety" type="range" min="1" max="5" class="form-range" formControlName="safety" />
+              <div class="small text-body-secondary">Оценка: {{ travelForm.controls.safety.value }}/5</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="population">Населенность</label>
+              <input id="population" type="range" min="1" max="5" class="form-range" formControlName="population" />
+              <div class="small text-body-secondary">Оценка: {{ travelForm.controls.population.value }}/5</div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="greenery">Растительность</label>
+              <input id="greenery" type="range" min="1" max="5" class="form-range" formControlName="greenery" />
+              <div class="small text-body-secondary">Оценка: {{ travelForm.controls.greenery.value }}/5</div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end">
+              <button type="submit" class="btn btn-dark px-4" [disabled]="saveState() === 'saving'">
+                @if (saveState() === 'saving') {
+                  Сохранение...
+                } @else {
+                  Сохранить запись
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
